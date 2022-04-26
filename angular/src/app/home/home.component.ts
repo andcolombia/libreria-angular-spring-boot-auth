@@ -45,6 +45,13 @@ export class HomeComponent implements OnInit {
     // the parameter here is optional. It's passed around and can be used after logging in
   }
 
+  async custom() {
+    this.oauthService.configure(authConfig);
+    await this.oauthService.loadDiscoveryDocument();
+    sessionStorage.setItem('flow', 'implicit');
+    this.oauthService.initLoginFlow('', {'acr_values': 'action:manage', 'login_hint': this.givenName});
+  }
+
   logout() {
     // this.oauthService.logOut();
     this.oauthService.revokeTokenAndLogout();
